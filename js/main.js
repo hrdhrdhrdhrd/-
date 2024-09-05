@@ -33,24 +33,5 @@
 		});
 	}, 250);
 
-	//map
-	var dot = {
-		huibinglou: new qq.maps.LatLng(40.642882,109.848177)
-	};
-
-	var driveMap = new qq.maps.Map($('.position-bailu')[0], {
-		panControlOptions: {position: qq.maps.ControlPosition.TOP_RIGHT},
-		zoomControlOptions: {position: qq.maps.ControlPosition.TOP_RIGHT},
-		scrollwheel: false,
-		center: dot.huibinglou,
-		zoom: 20
-	});
-
-	var marker = {
-		huibinglou: new qq.maps.Marker({
-			map: driveMap,
-			position: dot.huibinglou
-		})
-	};
 
 })(jQuery);
