@@ -72,34 +72,38 @@
 					<dd>
 						<div id="container"></div>
 						<script type="text/javascript">
+							var center = new TMap.LatLng(40.642882,109.848177);
+							var centerHeight = new TMap.LatLng(40.642882,109.848177, 134);
+
+							// 初始化地图
 							var map = new TMap.Map('container', {
-								zoom: 14,
-								center: new TMap.LatLng(40.642882,109.848177),
-							});
-							var geocoder = new TMap.service.Geocoder(); // 新建一个正逆地址解析类
-							var markers = new TMap.MultiMarker({
-								map: map,
-								geometries: [],
+								zoom: 17, // 设置地图缩放
+								center: new TMap.LatLng(40.642882,109.848177), // 设置地图中心点坐标，
+								pitch: 0, // 俯仰度
+								rotation: 0, // 旋转角度
 							});
 
-							function convert() {
-								markers.setGeometries([]);
-								var input = document.getElementById('location').value.split(',');
-								var location = new TMap.LatLng(Number(input[0]), Number(input[1]));
-								map.setCenter(location);
-								markers.updateGeometries([
+							// MultiMarker文档地址：https://lbs.qq.com/webApi/javascriptGL/glDoc/glDocMarker
+							var marker = new TMap.MultiMarker({
+								map: map,
+								styles: {
+									// 点标记样式
+									marker: new TMap.MarkerStyle({
+										width: 20, // 样式宽
+										height: 30, // 样式高
+										anchor: { x: 10, y: 30 }, // 描点位置
+									}),
+								},
+								geometries: [
+									// 点标记数据数组
 									{
-										id: 'main', // 点标注数据数组
-										position: location,
+										// 标记位置(纬度，经度，高度)
+										position: center,
+										id: 'marker',
 									},
-								]);
-								geocoder
-										.getAddress({ location: location }) // 将给定的坐标位置转换为地址
-										.then((result) => {
-											document.getElementById('address').value = result.result.address;
-											// 显示搜索到的地址
-										});
-							}
+								],
+							});
+
 						</script>
 					</dd>
 				</dl>
