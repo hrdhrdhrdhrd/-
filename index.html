@@ -79,6 +79,35 @@
 	</main>
 	<footer></footer>
 	<script type="text/javascript" src="js/jquery.min.js"></script>
-	<script type="text/javascript" src="js/main.js"></script>
+	<script type="text/javascript">
+		var map = new TMap.Map('container', {
+			zoom: 14,
+			center: new TMap.LatLng(40.642882,109.848177),
+		});
+		var geocoder = new TMap.service.Geocoder(); // 新建一个正逆地址解析类
+		var markers = new TMap.MultiMarker({
+			map: map,
+			geometries: [],
+		});
+
+		function convert() {
+			markers.setGeometries([]);
+			var input = document.getElementById('location').value.split(',');
+			var location = new TMap.LatLng(Number(input[0]), Number(input[1]));
+			map.setCenter(location);
+			markers.updateGeometries([
+				{
+					id: 'main', // 点标注数据数组
+					position: location,
+				},
+			]);
+			geocoder
+					.getAddress({ location: location }) // 将给定的坐标位置转换为地址
+					.then((result) => {
+						document.getElementById('address').value = result.result.address;
+						// 显示搜索到的地址
+					});
+		}
+	</script>
 </body>
 </html>
